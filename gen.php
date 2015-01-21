@@ -47,7 +47,7 @@
             border-top-left-radius: 8px;
             border-bottom-right-radius: 8px;
             border-bottom-left-radius: 8px;
-            box-shadow: rgba(0, 0, 0, 0.3) 0px 5px 5px 0px;
+            box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 8px 1px;
             width: 200px;
             float: left;
         }
