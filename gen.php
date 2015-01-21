@@ -33,6 +33,7 @@
             color: #aaa;
         }
 
+
         #container .item {
             word-wrap: break-word;
             text-align: center;
@@ -101,7 +102,6 @@
 <body>
 
 <h1 id="pagetitle">My Фотогрэфs</h1>
-
 <div id="container" class="packery">
     <!--<div id="container" class="packery js-packery" data-packery-options='{ "gutter": ".gutter-sizer", "itemSelector": ".item", "columnWidth": ".grid-sizer" }'>-->
     <div class="gutter-sizer"></div>
@@ -206,17 +206,17 @@ echo "</h2>";
             shadow: false, // Whether to render a shadow
             hwaccel: false, // Whether to use hardware acceleration
             className: 'spinner', // The CSS class to assign to the spinner
-            zIndex: 2e9, // The z-index (defaults to 2000000000)
-            top: '50%', // Top position relative to parent
-            left: '50%' // Left position relative to parent
+            zIndex: 2e9 // The z-index (defaults to 2000000000)
         };
         var target = document.getElementById('container');
         var spinner = new Spinner(opts).spin(target);
         $('.item').hide();
         $('#stats').hide();
+        $('#pagetitle').hide();
         var container = document.querySelector('.packery');
         $('#container').imagesLoaded().always(function(instance){
-            spinner.stop();
+	    spinner.stop();
+	 	     $('#pagetitle').fadeIn();
             $('.item').fadeIn();
             $('#stats').fadeIn();
             var pckry = new Packery( container, {
