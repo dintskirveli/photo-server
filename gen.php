@@ -24,7 +24,6 @@
 
         .item h3 {
             margin: 10px;
-            margin-bottom: 0px;
             font-size: 13px;
         }
 
@@ -73,6 +72,10 @@
             width: auto;
         }
 
+        #random h3{
+            font-size: 16px;
+        }
+
         a:link {
             color: black;
             text-decoration: none;
@@ -113,7 +116,7 @@
     <!--<div id="container" class="packery js-packery" data-packery-options='{ "gutter": ".gutter-sizer", "itemSelector": ".item", "columnWidth": ".grid-sizer" }'>-->
     <div class="gutter-sizer"></div>
     <div class="grid-sizer"></div>
-    <a onclick="chooser()" id="random"><div class='item'><img src='random.png'/><h3>RANDOM</h3><p>I don't know what I want, choose for me</p></div></a>
+    <a onclick="chooser()" id="random"><div class='item'><img src='random.png'/><h3>RANDOM</h3></div></a>
     <?php
     $countimages = 0;
     $albums = 0;
