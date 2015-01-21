@@ -29,12 +29,16 @@
         }
 
         .item p {
+            margin: 10px;
             font-size: 12px;
             color: #aaa;
         }
 
+        #container a {
+            cursor: pointer;
+        }
 
-        #container .item {
+        .item {
             word-wrap: break-word;
             text-align: center;
             vertical-align: top;
@@ -65,6 +69,9 @@
 
         }
 
+        #random img{
+            width: auto;
+        }
 
         a:link {
             color: black;
@@ -106,6 +113,7 @@
     <!--<div id="container" class="packery js-packery" data-packery-options='{ "gutter": ".gutter-sizer", "itemSelector": ".item", "columnWidth": ".grid-sizer" }'>-->
     <div class="gutter-sizer"></div>
     <div class="grid-sizer"></div>
+    <a onclick="chooser()" id="random"><div class='item'><img src='random.png'/><h3>RANDOM</h3><p>I don't know what I want, choose for me</p></div></a>
     <?php
     $countimages = 0;
     $albums = 0;
@@ -146,6 +154,11 @@ echo "</h2>";
 ?>
 
 <script>
+    function chooser() {
+
+        var albums = $("#container a").not("#random")
+        albums[Math.floor(Math.random() * albums.length)].click()
+    }
     // http://packery.metafizzy.co/packery.pkgd.js added as external resource
 
     // overwrite Packery methods
