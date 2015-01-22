@@ -3,8 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
     <title>My Фотогрэфs</title>
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+    <script src="js/jquery.js" type="text/javascript"></script>
     <script src="js/packery.pkgd.min.js"></script>
     <script src="js/imagesloaded.pkgd.min.js"></script>
     <script src="js/spin.min.js"></script>
@@ -68,12 +67,18 @@
 
         }
 
-        #random img{
+        .random img{
             width: auto;
         }
 
-        #random h3{
+        .random h3{
+            margin-top: 0px;
             font-size: 16px;
+        }
+
+        .random h1{
+            margin-top: 10px;
+            margin-bottom: 0px;
         }
 
         a:link {
@@ -116,7 +121,8 @@
     <!--<div id="container" class="packery js-packery" data-packery-options='{ "gutter": ".gutter-sizer", "itemSelector": ".item", "columnWidth": ".grid-sizer" }'>-->
     <div class="gutter-sizer"></div>
     <div class="grid-sizer"></div>
-    <a onclick="chooser()" id="random"><div class='item'><img src='random.png'/><h3>RANDOM</h3></div></a>
+    <a onclick="randomAlbum()" class="random"><div class='item'><img src='random.png'/><h3>Random Album</h3></div></a>
+    <a onclick="randomImages()" class="random"><div class='item'><h1>500</h1><h3>Random Photos</h3></div></a>
     <?php
     $countimages = 0;
     $albums = 0;
@@ -138,7 +144,7 @@
                     $countimages = $countimages + $imgcount;
                     $randomImageIndex = rand(0, $imgcount-1);
                     $img = $images[$randomImageIndex];
-                    echo "<a href='gallery.php?name=$file'><div class='item'><img src='$img'/><h3>$file</h3><p>$imgcount images.</p></div></a>";
+                    echo "<a href='gallery.php?name=$file' ><div class='item'><img src='$img'/><h3>$file</h3><p>$imgcount images.</p></div></a>";
                 }
             }
         }
@@ -157,12 +163,14 @@ echo "</h2>";
 ?>
 
 <script>
-    function chooser() {
-
-        var albums = $("#container a").not("#random")
+    function randomAlbum() {
+        var albums = $("#container a").not(".random")
         albums[Math.floor(Math.random() * albums.length)].click()
     }
-    // http://packery.metafizzy.co/packery.pkgd.js added as external resource
+
+    function randomImages() {
+        window.location.href = "gallery.php?random=true";
+    }
 
     // overwrite Packery methods
     var __resetLayout = Packery.prototype._resetLayout;

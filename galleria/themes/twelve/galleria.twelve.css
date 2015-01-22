@@ -131,9 +131,9 @@
 .galleria-thumbnails-list {
     position: absolute!important;
     top: 10px;
-    right: 10px;
+    right: 0px;
     left: 10px;
-    bottom: 41px;
+    bottom: 0px;
     overflow: auto!important;
 }
 .galleria-thumbnails .galleria-image {

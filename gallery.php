@@ -19,17 +19,34 @@
 <div class="galleria">
 </div>
 <script>
+
     var data =
         <?php
-        $jsondata = array();
-        $dir = "photos/".$_GET["name"];
-        $files = scandir($dir."/small");
         $allowed= array("JPG","JPEG");
-        foreach ($files as $file) {
-            if (!is_dir($dir."/small/".$file) && in_array(pathinfo($file, PATHINFO_EXTENSION), $allowed)){
-                array_push($jsondata, array("thumb" => "$dir/thumbs/$file",
-                    "image" => "$dir/small/$file",
-                    "title" => "$file"));
+        $jsondata = array();
+        //set page title
+        if(!isset($_GET["name"]) || (isset($_GET['random']) && $_GET['random'] == "true")) {
+            $output = `cat allfiles | shuf | head -n 10`;
+            $files = explode("\n", $output);
+             foreach ($files as $file) {
+                if($file != '') {
+                    $thumb = str_replace("/small/", "/thumbs/", $file);
+                    array_push($jsondata, array("thumb" => "$thumb",
+                        "image" => "$file",
+                        "title" => "$file"));
+                }
+            }
+        } else {
+
+            $dir = "photos/".$_GET["name"];
+            $files = scandir($dir."/small");
+
+            foreach ($files as $file) {
+                if (!is_dir($dir."/small/".$file) && in_array(pathinfo($file, PATHINFO_EXTENSION), $allowed)){
+                    array_push($jsondata, array("thumb" => "$dir/thumbs/$file",
+                        "image" => "$dir/small/$file",
+                        "title" => "$file"));
+                }
             }
         }
         echo json_encode($jsondata);
