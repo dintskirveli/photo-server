@@ -26,14 +26,16 @@
         $jsondata = array();
         //set page title
         if(!isset($_GET["name"]) || (isset($_GET['random']) && $_GET['random'] == "true")) {
-            $output = `cat allfiles | shuf | head -n 10`;
+            $output = `cat allfiles | shuf | head -n 500`;
             $files = explode("\n", $output);
              foreach ($files as $file) {
                 if($file != '') {
                     $thumb = str_replace("/small/", "/thumbs/", $file);
+	            $name = str_replace("photos/", "", $file);
+		    $name = str_replace("small/", "", $name);
                     array_push($jsondata, array("thumb" => "$thumb",
                         "image" => "$file",
-                        "title" => "$file"));
+                        "title" => "$name"));
                 }
             }
         } else {
