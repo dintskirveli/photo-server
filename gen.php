@@ -34,6 +34,7 @@
 
         #container a {
             cursor: pointer;
+            display: none;
         }
 
         .item {
@@ -109,7 +110,12 @@
         }
 
         #stats {
+            display: none;
             text-align: center;
+        }
+
+        #pagetitle {
+            display: none;
         }
     </style>
 </head>
@@ -208,8 +214,6 @@ echo "</h2>";
         this.layout();
     };
 
-    jQuery("#pagetitle").fitText(0.7);
-
     docReady( function() {
         <?php
             if ($countimages == 0) {
@@ -234,15 +238,16 @@ echo "</h2>";
         };
         var target = document.getElementById('container');
         var spinner = new Spinner(opts).spin(target);
-        $('.item').hide();
-        $('#stats').hide();
-        $('#pagetitle').hide();
+        //$('.item').hide();
+        //$('#stats').hide();
+        //$('#pagetitle').hide();
         var container = document.querySelector('.packery');
         $('#container').imagesLoaded().always(function(instance){
-	    spinner.stop();
-	 	     $('#pagetitle').fadeIn();
-            $('.item').fadeIn();
+	        spinner.stop();
+	 	    $('#pagetitle').fadeIn();
+            $('#container a').fadeIn();
             $('#stats').fadeIn();
+            jQuery("#pagetitle").fitText(0.8);
             var pckry = new Packery( container, {
                 itemSelector: '.item',
                 columnWidth: 200,
