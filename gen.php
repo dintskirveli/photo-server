@@ -12,6 +12,7 @@
     <link href="/css/progressjs.min.css" rel="stylesheet" />
     <style type="text/css">
         body {
+            margin: 0px;
             background:#ececec;
             font-family: 'Helvetica Neue', arial, sans-serif;
         }
@@ -124,8 +125,12 @@
 
 <body>
 
+<div id="progress"></div>
 <h1 id="pagetitle">My Фотогрэфs</h1>
+
+
 <div id="container" class="packery">
+    <h1 id="progress-text"></h1>
     <!--<div id="container" class="packery js-packery" data-packery-options='{ "gutter": ".gutter-sizer", "itemSelector": ".item", "columnWidth": ".grid-sizer" }'>-->
     <div class="gutter-sizer"></div>
     <div class="grid-sizer"></div>
@@ -226,7 +231,7 @@ echo "</h2>";
             }
          ?>
         //progressJs("#progress").start();
-        var progress = progressJs().setOptions({overlayMode: true, theme: 'blueOverlay'}).start()
+        //var progress = progressJs("#progress").start()
 
         /*var opts = {
             lines: 13, // The number of lines to draw
@@ -250,16 +255,20 @@ echo "</h2>";
 
         var numLoaded = 0;
 
+        var progressText = $("#progress-text")
 
         $('#container').imagesLoaded().progress(function( instance, image ) {
             numLoaded++;
-            console.log("progress: "+numLoaded*100/(numThumbs+1))
-            progress.set(numLoaded*100/(numThumbs+1));
+            var percent = numLoaded*100/(numThumbs+1);
+            console.log("progress: "+percent);
+            progressText.text(percent + '%');
+            //progress.set(percent);
         });
 
         $('#container').imagesLoaded().always(function(instance){
 	        //spinner.stop();
-            progress.end()
+            //progress.end()
+            progressText.hide();
 	 	    $('#pagetitle').fadeIn();
             $('#container a').fadeIn();
             $('#stats').fadeIn();
