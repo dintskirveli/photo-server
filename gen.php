@@ -114,6 +114,10 @@
             text-align: center;
         }
 
+	#progress-text {
+		color: #B2B2B2;
+	}
+
     </style>
 </head>
 
@@ -227,7 +231,7 @@ echo "</h2>";
 
         $("#pagetitle").fitText(0.8);
         var progressText = $("#progress-text");
-        progressText.fitText(1.2);
+        progressText.fitText(0.4);
 
 
         var numLoaded = 0;
