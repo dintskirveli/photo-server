@@ -117,9 +117,6 @@
             text-align: center;
         }
 
-        #pagetitle {
-            display: none;
-        }
     </style>
 </head>
 
@@ -255,11 +252,12 @@ echo "</h2>";
 
         var numLoaded = 0;
 
+        $("#pagetitle").fitText(0.8);
         var progressText = $("#progress-text")
 
         $('#container').imagesLoaded().progress(function( instance, image ) {
             numLoaded++;
-            var percent = numLoaded*100/(numThumbs+1);
+            var percent = Math.round(numLoaded*100/(numThumbs+1));
             console.log("progress: "+percent);
             progressText.text(percent + '%');
             //progress.set(percent);
@@ -272,7 +270,6 @@ echo "</h2>";
 	 	    $('#pagetitle').fadeIn();
             $('#container a').fadeIn();
             $('#stats').fadeIn();
-            $("#pagetitle").fitText(0.8);
             new Packery( container, {
                 itemSelector: '.item',
                 columnWidth: 200,
