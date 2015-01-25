@@ -8,8 +8,8 @@
     <script src="js/imagesloaded.pkgd.min.js"></script>
     <script src="js/spin.min.js"></script>
     <script src="js/jquery.fittext.js"></script>
-    <script src="/js/pace.min.js"></script>
-    <link href="/css/load.css" rel="stylesheet" />
+    <script src="/js/progress.min.js"></script>
+    <link href="/css/progressjs.min.css" rel="stylesheet" />
     <style type="text/css">
         body {
             background:#ececec;
@@ -217,13 +217,18 @@ echo "</h2>";
     };
 
     docReady( function() {
+
         <?php
             if ($countimages == 0) {
-            echo "return;";
+                echo "return;";
+            } else {
+                echo "var numThumbs = $albums;";
             }
          ?>
+        //progressJs("#progress").start();
+        var progress = progressJs().setOptions({overlayMode: true, theme: 'blueOverlay'}).start()
 
-        var opts = {
+        /*var opts = {
             lines: 13, // The number of lines to draw
             length: 20, // The length of each line
             width: 10, // The line thickness
@@ -240,11 +245,21 @@ echo "</h2>";
             zIndex: 2e9 // The z-index (defaults to 2000000000)
         };
         var target = document.getElementById('container');
-        var spinner = new Spinner(opts).spin(target);
+        var spinner = new Spinner(opts).spin(target);*/
         var container = document.querySelector('.packery');
 
+        var numLoaded = 0;
+
+
+        $('#container').imagesLoaded().progress(function( instance, image ) {
+            numLoaded++;
+            console.log("progress: "+numLoaded*100/(numThumbs+1))
+            progress.set(numLoaded*100/(numThumbs+1));
+        });
+
         $('#container').imagesLoaded().always(function(instance){
-	        spinner.stop();
+	        //spinner.stop();
+            progress.end()
 	 	    $('#pagetitle').fadeIn();
             $('#container a').fadeIn();
             $('#stats').fadeIn();
