@@ -6,10 +6,7 @@
     <script src="js/jquery.js" type="text/javascript"></script>
     <script src="js/packery.pkgd.min.js"></script>
     <script src="js/imagesloaded.pkgd.min.js"></script>
-    <script src="js/spin.min.js"></script>
     <script src="js/jquery.fittext.js"></script>
-    <script src="/js/progress.min.js"></script>
-    <link href="/css/progressjs.min.css" rel="stylesheet" />
     <style type="text/css">
         body {
             margin: 0px;
@@ -227,50 +224,25 @@ echo "</h2>";
                 echo "var numThumbs = $albums;";
             }
          ?>
-        //progressJs("#progress").start();
-        //var progress = progressJs("#progress").start()
-
-        /*var opts = {
-            lines: 13, // The number of lines to draw
-            length: 20, // The length of each line
-            width: 10, // The line thickness
-            radius: 30, // The radius of the inner circle
-            corners: 1, // Corner roundness (0..1)
-            rotate: 0, // The rotation offset
-            direction: 1, // 1: clockwise, -1: counterclockwise
-            color: '#000', // #rgb or #rrggbb or array of colors
-            speed: 1, // Rounds per second
-            trail: 60, // Afterglow percentage
-            shadow: false, // Whether to render a shadow
-            hwaccel: false, // Whether to use hardware acceleration
-            className: 'spinner', // The CSS class to assign to the spinner
-            zIndex: 2e9 // The z-index (defaults to 2000000000)
-        };
-        var target = document.getElementById('container');
-        var spinner = new Spinner(opts).spin(target);*/
-        var container = document.querySelector('.packery');
-
-        var numLoaded = 0;
 
         $("#pagetitle").fitText(0.8);
-        var progressText = $("#progress-text")
+        var progressText = $("#progress-text");
+        progressText.fitText(1.2);
 
+
+        var numLoaded = 0;
         $('#container').imagesLoaded().progress(function( instance, image ) {
             numLoaded++;
             var percent = Math.round(numLoaded*100/(numThumbs+1));
-            console.log("progress: "+percent);
             progressText.text(percent + '%');
-            //progress.set(percent);
         });
 
         $('#container').imagesLoaded().always(function(instance){
-	        //spinner.stop();
-            //progress.end()
             progressText.hide();
-	 	    $('#pagetitle').fadeIn();
+            $('#pagetitle').fadeIn();
             $('#container a').fadeIn();
             $('#stats').fadeIn();
-            new Packery( container, {
+            new Packery( document.querySelector('.packery'), {
                 itemSelector: '.item',
                 columnWidth: 200,
                 gutter: 20
