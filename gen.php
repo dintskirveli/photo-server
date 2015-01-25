@@ -8,6 +8,8 @@
     <script src="js/imagesloaded.pkgd.min.js"></script>
     <script src="js/spin.min.js"></script>
     <script src="js/jquery.fittext.js"></script>
+    <script src="/js/pace.min.js"></script>
+    <link href="/css/load.css" rel="stylesheet" />
     <style type="text/css">
         body {
             background:#ececec;
@@ -220,6 +222,7 @@ echo "</h2>";
             echo "return;";
             }
          ?>
+
         var opts = {
             lines: 13, // The number of lines to draw
             length: 20, // The length of each line
@@ -238,17 +241,15 @@ echo "</h2>";
         };
         var target = document.getElementById('container');
         var spinner = new Spinner(opts).spin(target);
-        //$('.item').hide();
-        //$('#stats').hide();
-        //$('#pagetitle').hide();
         var container = document.querySelector('.packery');
+
         $('#container').imagesLoaded().always(function(instance){
 	        spinner.stop();
 	 	    $('#pagetitle').fadeIn();
             $('#container a').fadeIn();
             $('#stats').fadeIn();
-            jQuery("#pagetitle").fitText(0.8);
-            var pckry = new Packery( container, {
+            $("#pagetitle").fitText(0.8);
+            new Packery( container, {
                 itemSelector: '.item',
                 columnWidth: 200,
                 gutter: 20
