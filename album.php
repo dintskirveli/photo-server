@@ -7,11 +7,14 @@
     <script src="js/packery.pkgd.min.js"></script>
     <script src="js/imagesloaded.pkgd.min.js"></script>
     <script src="js/jquery.fittext.js"></script>
+    <link rel="stylesheet" href="css/jquery.fancybox.css" type="text/css" media="screen" />
+    <script src="js/jquery.fancybox.pack.js"></script>
     <style type="text/css">
         body {
             margin: 0px;
             background:#ececec;
             font-family: 'Helvetica Neue', arial, sans-serif;
+            text-align: center;
         }
 
         h1 {
@@ -41,12 +44,8 @@
             word-wrap: break-word;
             text-align: center;
             vertical-align: top;
-            background: #fff;
             box-sizing: border-box;
-            border-top-right-radius: 8px;
-            border-top-left-radius: 8px;
-            border-bottom-right-radius: 8px;
-            border-bottom-left-radius: 8px;
+
             box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 8px 1px;
             width: 200px;
             float: left;
@@ -54,6 +53,7 @@
 
         .packery {
             margin: 0 auto;
+            margin-top: 20px;
         }
         .packery:after {
             content: ' ';
@@ -63,8 +63,6 @@
 
         .item img {
             width: 100%;
-            border-top-right-radius: 8px;
-            border-top-left-radius: 8px;
 
         }
 
@@ -114,9 +112,23 @@
             text-align: center;
         }
 
-	#progress-text {
-		color: #B2B2B2;
-	}
+        #progress-text {
+            color: #B2B2B2;
+        }
+
+        #albumtitle {
+            text-overflow: ellipsis;
+            width: 100%;
+            font-size: 30px;
+            overflow: hidden;
+        }
+
+        #slideshow {
+            font-family: anchor-web-1, anchor-web-2, Impact, sans-serif;
+            font-size: 30px;
+            margin-bottom: 100px;
+            text-decoration: underline;
+        }
 
     </style>
 </head>
@@ -125,6 +137,8 @@
 
 <div id="progress"></div>
 <h1 id="pagetitle">My Фотогрэфs</h1>
+<h1 id="albumtitle"></h1>
+<a id='slideshow'>Slideshow</a>
 
 
 <div id="container" class="packery">
@@ -132,40 +146,52 @@
     <!--<div id="container" class="packery js-packery" data-packery-options='{ "gutter": ".gutter-sizer", "itemSelector": ".item", "columnWidth": ".grid-sizer" }'>-->
     <div class="gutter-sizer"></div>
     <div class="grid-sizer"></div>
-    <a onclick="randomAlbum()" class="random"><div class='item'><img src='random.png'/><h3>Random Album</h3></div></a>
-    <a onclick="randomImages()" class="random"><div class='item'><h1>500</h1><h3>Random Photos</h3></div></a>
-    <?php
-    $countimages = 0;
-    $albums = 0;
 
-    $secret=array("2014_12_26_Cocktails");
-    $dir    = 'photos';
-    $files = scandir($dir,1);
-    foreach ($files as $file) {
-        if (!in_array($file, $secret)){
-            $fullfile = $dir."/".$file;
-            if ($file != "." && $file != ".." && is_dir($fullfile)){
-                $search_dir = $fullfile."/"."thumbs";
-                $images = glob("$search_dir/*.JPG");
-                $imgcount = count($images);
-                if ($imgcount == 0){
-                    echo "<script>console.log('$file')</script>";
-                } else {
-                    $albums = $albums + 1;
-                    $countimages = $countimages + $imgcount;
-                    $randomImageIndex = rand(0, $imgcount-1);
-                    $img = $images[$randomImageIndex];
-                    echo "<a href='album.php?name=$file' ><div class='item'><img src='$img'/><h3>$file</h3><p>$imgcount images.</p></div></a>";
-                }
+
+    <?php
+    $albumName ="";
+    $countimages=0;
+    $allowed= array("JPG","JPEG");
+    if(!isset($_GET["name"]) || (isset($_GET['random']) && $_GET['random'] == "true")) {
+        $albumName="Random";
+        $output = `cat allfiles | shuf | head -n 500`;
+        $files = explode("\n", $output);
+        foreach ($files as $file) {
+            if($file != '') {
+                $thumb = str_replace("/small/", "/thumbs/", $file);
+                $name = str_replace("photos/", "", $file);
+                $name = str_replace("small/", "", $name);
+                /*array_push($jsondata, array("thumb" => "$thumb",
+                    "image" => "$file",
+                    "title" => "$name"));*/
+                echo "<a><div class='item'><img src='$thumb'/></div></a>";
+                $countimages+=1;
             }
         }
+    } else {
+        echo "<a id='slideshow' href='gallery.php?name=".$_GET['name'].">Start Slideshow</a>";
+        $dir = "photos/".$_GET["name"];
+        $files = scandir($dir."/small");
+        $albumName=$_GET["name"];
+        foreach ($files as $file) {
+            if (!is_dir($dir."/small/".$file) && in_array(pathinfo($file, PATHINFO_EXTENSION), $allowed)){
+                /*array_push($jsondata, array("thumb" => "$dir/thumbs/$file",
+                    "image" => "$dir/small/$file",
+                    "title" => "$file"));*/
+                echo "<a class='fancybox' href='$dir/small/$file' title='$file'><img class='item' src='$dir/thumbs/$file'/></a>";
+                $countimages+=1;
+            }
+        }
+        echo "<script>$('#albumtitle').text('$albumName'); $('#slideshow')[0].href='gallery.php?name=$albumName'</script>";
+        //<a href="img/image-1.jpg" data-lightbox="image-1" data-title="My caption">Image #1</a>
     }
+
     ?>
 </div>
 <?php
 echo "<h2 id='stats'>";
-if ($albums > 0) {
-    echo "$albums albums and $countimages images.";
+if ($countimages > 0) {
+    echo "$countimages images.";
 } else {
     echo "... will be back soon :(";
 }
@@ -221,17 +247,16 @@ echo "</h2>";
     docReady( function() {
 
         <?php
-            if ($countimages == 0) {
+            if ($countimages === 0) {
                 echo "return;";
             } else {
-                echo "var numThumbs = $albums;";
+                echo "var numThumbs = $countimages;";
             }
          ?>
 
         $("#pagetitle").fitText(1);
         var progressText = $("#progress-text");
         progressText.fitText(1);
-
 
         var numLoaded = 0;
         $('#container').imagesLoaded().progress(function( instance, image ) {
@@ -247,7 +272,15 @@ echo "</h2>";
             new Packery( document.querySelector('.packery'), {
                 itemSelector: '.item',
                 columnWidth: 200,
-                gutter: 20
+                gutter: 10
+            });
+
+            $(".fancybox").attr('rel', 'gallery').fancybox({
+                padding : 0,
+                openEffect	: 'none',
+                closeEffect	: 'none',
+                nextEffect	: 'none',
+                prevEffect	: 'none'
             });
 
         });
