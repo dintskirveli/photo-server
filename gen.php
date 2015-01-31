@@ -231,7 +231,7 @@ echo "</h2>";
 
         $("#pagetitle").fitText(0.8);
         var progressText = $("#progress-text");
-        progressText.fitText(0.4);
+        progressText.fitText(1);
 
 
         var numLoaded = 0;
