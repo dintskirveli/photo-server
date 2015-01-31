@@ -243,9 +243,8 @@ echo "</h2>";
 
         $('#container').imagesLoaded().always(function(instance){
             progressText.hide();
-            $('#pagetitle').fadeIn();
-            $('#container a').fadeIn();
-            $('#stats').fadeIn();
+            $('#container a').show();
+            $('#stats').show();
             new Packery( document.querySelector('.packery'), {
                 itemSelector: '.item',
                 columnWidth: 200,

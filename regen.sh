@@ -1,2 +1,2 @@
-curl localhost:4159/gen.php > index.php
+curl localhost/gen.php > index.php
 find photos/ | grep "/small/" | grep JPG | grep -v Cocktail > allfiles
