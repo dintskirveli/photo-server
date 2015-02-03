@@ -169,7 +169,6 @@
             }
         }
     } else {
-        echo "<a id='slideshow' href='gallery.php?name=".$_GET['name'].">Start Slideshow</a>";
         $dir = "photos/".$_GET["name"];
         $files = scandir($dir."/small");
         $albumName=$_GET["name"];
