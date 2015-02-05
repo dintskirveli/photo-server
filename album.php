@@ -14,7 +14,7 @@
     <script src="js/jquery.lazyload.min.js" type="text/javascript"></script>
 
     <script>
-        $(".lazy").lazyload();
+        $(".lazy").lazyload({effect: "fadeIn"});
     </script>
     <style type="text/css">
         body {
