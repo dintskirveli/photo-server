@@ -9,6 +9,13 @@
     <script src="js/jquery.fittext.js"></script>
     <link rel="stylesheet" href="css/jquery.fancybox.css" type="text/css" media="screen" />
     <script src="js/jquery.fancybox.pack.js"></script>
+    <link rel="stylesheet" href="css/jquery.fancybox-buttons.css" type="text/css" media="screen" />
+    <script src="js/jquery.fancybox-buttons.js"></script>
+    <script src="js/jquery.lazyload.min.js" type="text/javascript"></script>
+
+    <script>
+        $(".lazy").lazyload();
+    </script>
     <style type="text/css">
         body {
             margin: 0px;
@@ -45,7 +52,8 @@
             text-align: center;
             vertical-align: top;
             box-sizing: border-box;
-
+            width:200px;
+            height:150px;
             box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 8px 1px;
             width: 200px;
             float: left;
@@ -62,8 +70,13 @@
         }
 
         .item img {
-            width: 100%;
-
+            min-width: 100%;
+            min-height: 100%;
+            clip: rect(0px,200px,150px,0px);
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
         }
 
         .random img{
@@ -112,10 +125,6 @@
             text-align: center;
         }
 
-        #progress-text {
-            color: #B2B2B2;
-        }
-
         #albumtitle {
             text-overflow: ellipsis;
             width: 100%;
@@ -126,8 +135,13 @@
         #slideshow {
             font-family: anchor-web-1, anchor-web-2, Impact, sans-serif;
             font-size: 30px;
-            margin-bottom: 100px;
             text-decoration: underline;
+        }
+
+        ul#supersized {
+            z-index: 1000;
+            visibility: hidden;
+            display: none;
         }
 
     </style>
@@ -135,11 +149,9 @@
 
 <body>
 
-<div id="progress"></div>
 <h1 id="pagetitle">My Фотогрэфs</h1>
 <h1 id="albumtitle"></h1>
 <a id='slideshow'>Slideshow</a>
-
 
 <div id="container" class="packery">
     <h1 id="progress-text"></h1>
@@ -151,6 +163,7 @@
     <?php
     $albumName ="";
     $countimages=0;
+    $jsondata=array();
     $allowed= array("JPG","JPEG");
     if(!isset($_GET["name"]) || (isset($_GET['random']) && $_GET['random'] == "true")) {
         $albumName="Random";
@@ -161,9 +174,9 @@
                 $thumb = str_replace("/small/", "/thumbs/", $file);
                 $name = str_replace("photos/", "", $file);
                 $name = str_replace("small/", "", $name);
-                /*array_push($jsondata, array("thumb" => "$thumb",
+                array_push($jsondata, array("thumb" => "$thumb",
                     "image" => "$file",
-                    "title" => "$name"));*/
+                    "title" => "$name"));
                 echo "<a><div class='item'><img src='$thumb'/></div></a>";
                 $countimages+=1;
             }
@@ -174,14 +187,14 @@
         $albumName=$_GET["name"];
         foreach ($files as $file) {
             if (!is_dir($dir."/small/".$file) && in_array(pathinfo($file, PATHINFO_EXTENSION), $allowed)){
-                /*array_push($jsondata, array("thumb" => "$dir/thumbs/$file",
+                array_push($jsondata, array("thumb" => "$dir/thumbs/$file",
                     "image" => "$dir/small/$file",
-                    "title" => "$file"));*/
-                echo "<a class='fancybox' href='$dir/small/$file' title='$file'><img class='item' src='$dir/thumbs/$file'/></a>";
+                    "title" => "$file"));
+                echo "<a class='fancybox' href='$dir/small/$file' title='$file'><div class='item'/><img class= 'lazy' src='$dir/thumbs/$file' /></div></a>";
                 $countimages+=1;
             }
         }
-        echo "<script>$('#albumtitle').text('$albumName'); $('#slideshow')[0].href='gallery.php?name=$albumName'</script>";
+        echo "<script>$('#albumtitle').text('$albumName');$('#slideshow')[0].href='gallery.php?name=$albumName'</script>";
         //<a href="img/image-1.jpg" data-lightbox="image-1" data-title="My caption">Image #1</a>
     }
 
@@ -198,15 +211,6 @@ echo "</h2>";
 ?>
 
 <script>
-    function randomAlbum() {
-        var albums = $("#container a").not(".random")
-        albums[Math.floor(Math.random() * albums.length)].click()
-    }
-
-    function randomImages() {
-        window.location.href = "gallery.php?random=true";
-    }
-
     // overwrite Packery methods
     var __resetLayout = Packery.prototype._resetLayout;
     Packery.prototype._resetLayout = function() {
@@ -257,14 +261,7 @@ echo "</h2>";
         var progressText = $("#progress-text");
         progressText.fitText(1);
 
-        var numLoaded = 0;
-        $('#container').imagesLoaded().progress(function( instance, image ) {
-            numLoaded++;
-            var percent = Math.round(numLoaded*100/(numThumbs+1));
-            progressText.text(percent + '%');
-        });
 
-        $('#container').imagesLoaded().always(function(instance){
             progressText.hide();
             $('#container a').show();
             $('#stats').show();
@@ -279,10 +276,14 @@ echo "</h2>";
                 openEffect	: 'none',
                 closeEffect	: 'none',
                 nextEffect	: 'none',
-                prevEffect	: 'none'
+                prevEffect	: 'none',
+                helpers		: {
+                    title	: { type : 'float' },
+                    buttons	: {}
+                }
             });
 
-        });
+        //});
     });
 </script>
 </body>
