@@ -54,7 +54,8 @@
             box-sizing: border-box;
             width:200px;
             height:150px;
-            box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 8px 1px;
+            background-color: lightgray;
+            /*box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 8px 1px;*/
             width: 200px;
             float: left;
         }
@@ -113,7 +114,7 @@
             text-decoration: underline;
         }
         .gutter-sizer {
-            width: 2%;
+            width: 1%;
         }
 
         .grid-sizer {
@@ -190,7 +191,7 @@
                 array_push($jsondata, array("thumb" => "$dir/thumbs/$file",
                     "image" => "$dir/small/$file",
                     "title" => "$file"));
-                echo "<a class='fancybox' href='$dir/small/$file' title='$file'><div class='item'/><img class= 'lazy' src='$dir/thumbs/$file' /></div></a>";
+                echo "<a class='fancybox' href='$dir/small/$file' title='$file'><div class='item'/><img class= 'lazy' src='$dir/thumbs/$file1' /></div></a>";
                 $countimages+=1;
             }
         }
@@ -268,7 +269,7 @@ echo "</h2>";
             new Packery( document.querySelector('.packery'), {
                 itemSelector: '.item',
                 columnWidth: 200,
-                gutter: 10
+                gutter: 5
             });
 
             $(".fancybox").attr('rel', 'gallery').fancybox({
