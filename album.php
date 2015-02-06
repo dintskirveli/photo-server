@@ -48,6 +48,10 @@
         }
 
         .item {
+            border-top-right-radius: 8px;
+            border-top-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            border-bottom-left-radius: 8px;
             word-wrap: break-word;
             text-align: center;
             vertical-align: top;
@@ -55,7 +59,7 @@
             width:200px;
             height:150px;
             background-color: lightgray;
-            /*box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 8px 1px;*/
+            box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 8px 1px;
             width: 200px;
             float: left;
         }
@@ -77,6 +81,10 @@
             position: absolute;
             left: 0;
             top: 0;
+            border-top-right-radius: 8px;
+            border-top-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            border-bottom-left-radius: 8px;
         }
         }
 
@@ -191,7 +199,7 @@
                 array_push($jsondata, array("thumb" => "$dir/thumbs/$file",
                     "image" => "$dir/small/$file",
                     "title" => "$file"));
-                echo "<a class='fancybox' href='$dir/small/$file' title='$file'><div class='item'/><img class= 'lazy' src='$dir/thumbs/$file1' /></div></a>";
+                echo "<a class='fancybox' href='$dir/small/$file' title='$file'><div class='item'/><img class= 'lazy' src='$dir/thumbs/$file' /></div></a>";
                 $countimages+=1;
             }
         }
@@ -269,12 +277,12 @@ echo "</h2>";
             new Packery( document.querySelector('.packery'), {
                 itemSelector: '.item',
                 columnWidth: 200,
-                gutter: 5
+                gutter: 20
             });
 
             $(".fancybox").attr('rel', 'gallery').fancybox({
                 padding : 0,
-                openEffect	: 'none',
+               	openEffect	: 'none',
                 closeEffect	: 'none',
                 nextEffect	: 'none',
                 prevEffect	: 'none',
