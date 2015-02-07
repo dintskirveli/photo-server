@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
     <title>My Фотогрэфs</title>
     <script src="js/jquery.js" type="text/javascript"></script>
     <script src="js/packery.pkgd.min.js"></script>
     <script src="js/imagesloaded.pkgd.min.js"></script>
     <script src="js/jquery.fittext.js"></script>
-    <link rel="stylesheet" href="css/jquery.fancybox.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="css/jquery.fancybox.css" type="text/css" media="screen"/>
     <script src="js/jquery.fancybox.pack.js"></script>
-    <link rel="stylesheet" href="css/jquery.fancybox-buttons.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="css/jquery.fancybox-buttons.css" type="text/css" media="screen"/>
     <script src="js/jquery.fancybox-buttons.js"></script>
     <script src="js/jquery.lazyload.min.js" type="text/javascript"></script>
 
@@ -19,7 +19,7 @@
     <style type="text/css">
         body {
             margin: 0px;
-            background:#ececec;
+            background: #ececec;
             font-family: 'Helvetica Neue', arial, sans-serif;
             text-align: center;
         }
@@ -48,16 +48,12 @@
         }
 
         .item {
-            border-top-right-radius: 8px;
-            border-top-left-radius: 8px;
-            border-bottom-right-radius: 8px;
-            border-bottom-left-radius: 8px;
             word-wrap: break-word;
             text-align: center;
             vertical-align: top;
             box-sizing: border-box;
-            width:200px;
-            height:150px;
+            width: 200px;
+            height: 150px;
             background-color: lightgray;
             box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 8px 1px;
             width: 200px;
@@ -68,6 +64,7 @@
             margin: 0 auto;
             margin-top: 20px;
         }
+
         .packery:after {
             content: ' ';
             display: block;
@@ -77,27 +74,24 @@
         .item img {
             min-width: 100%;
             min-height: 100%;
-            clip: rect(0px,200px,150px,0px);
+            clip: rect(0px, 200px, 150px, 0px);
             position: absolute;
             left: 0;
             top: 0;
-            border-top-right-radius: 8px;
-            border-top-left-radius: 8px;
-            border-bottom-right-radius: 8px;
-            border-bottom-left-radius: 8px;
-        }
         }
 
-        .random img{
+        }
+
+        .random img {
             width: auto;
         }
 
-        .random h3{
+        .random h3 {
             margin-top: 0px;
             font-size: 16px;
         }
 
-        .random h1{
+        .random h1 {
             margin-top: 10px;
             margin-bottom: 0px;
         }
@@ -121,6 +115,7 @@
             color: black;
             text-decoration: underline;
         }
+
         .gutter-sizer {
             width: 1%;
         }
@@ -159,6 +154,7 @@
 <body>
 
 <h1 id="pagetitle">My Фотогрэфs</h1>
+
 <h1 id="albumtitle"></h1>
 <a id='slideshow'>Slideshow</a>
 
@@ -170,16 +166,16 @@
 
 
     <?php
-    $albumName ="";
-    $countimages=0;
-    $jsondata=array();
-    $allowed= array("JPG","JPEG");
-    if(!isset($_GET["name"]) || (isset($_GET['random']) && $_GET['random'] == "true")) {
-        $albumName="Random";
+    $albumName = "";
+    $countimages = 0;
+    $jsondata = array();
+    $allowed = array("JPG", "JPEG");
+    if (!isset($_GET["name"]) || (isset($_GET['random']) && $_GET['random'] == "true")) {
+        $albumName = "Random";
         $output = `cat allfiles | shuf | head -n 500`;
         $files = explode("\n", $output);
         foreach ($files as $file) {
-            if($file != '') {
+            if ($file != '') {
                 $thumb = str_replace("/small/", "/thumbs/", $file);
                 $name = str_replace("photos/", "", $file);
                 $name = str_replace("small/", "", $name);
@@ -187,20 +183,20 @@
                     "image" => "$file",
                     "title" => "$name"));
                 echo "<a><div class='item'><img src='$thumb'/></div></a>";
-                $countimages+=1;
+                $countimages += 1;
             }
         }
     } else {
-        $dir = "photos/".$_GET["name"];
-        $files = scandir($dir."/small");
-        $albumName=$_GET["name"];
+        $dir = "photos/" . $_GET["name"];
+        $files = scandir($dir . "/small");
+        $albumName = $_GET["name"];
         foreach ($files as $file) {
-            if (!is_dir($dir."/small/".$file) && in_array(pathinfo($file, PATHINFO_EXTENSION), $allowed)){
+            if (!is_dir($dir . "/small/" . $file) && in_array(pathinfo($file, PATHINFO_EXTENSION), $allowed)) {
                 array_push($jsondata, array("thumb" => "$dir/thumbs/$file",
                     "image" => "$dir/small/$file",
                     "title" => "$file"));
                 echo "<a class='fancybox' href='$dir/small/$file' title='$file'><div class='item'/><img class= 'lazy' src='$dir/thumbs/$file' /></div></a>";
-                $countimages+=1;
+                $countimages += 1;
             }
         }
         echo "<script>$('#albumtitle').text('$albumName');$('#slideshow')[0].href='gallery.php?name=$albumName'</script>";
@@ -222,25 +218,25 @@ echo "</h2>";
 <script>
     // overwrite Packery methods
     var __resetLayout = Packery.prototype._resetLayout;
-    Packery.prototype._resetLayout = function() {
-        __resetLayout.call( this );
+    Packery.prototype._resetLayout = function () {
+        __resetLayout.call(this);
         // reset packer
-        var parentSize = getSize( this.element.parentNode );
+        var parentSize = getSize(this.element.parentNode);
         var colW = this.columnWidth + this.gutter;
-        this.fitWidth = Math.floor( ( parentSize.innerWidth + this.gutter ) / colW ) * colW;
-        console.log( colW, this.fitWidth )
+        this.fitWidth = Math.floor(( parentSize.innerWidth + this.gutter ) / colW) * colW;
+        console.log(colW, this.fitWidth)
         this.packer.width = this.fitWidth;
         this.packer.height = Number.POSITIVE_INFINITY;
         this.packer.reset();
     };
 
 
-    Packery.prototype._getContainerSize = function() {
+    Packery.prototype._getContainerSize = function () {
         // remove empty space from fit width
         var emptyWidth = 0;
-        for ( var i=0, len = this.packer.spaces.length; i < len; i++ ) {
+        for (var i = 0, len = this.packer.spaces.length; i < len; i++) {
             var space = this.packer.spaces[i];
-            if ( space.y === 0 && space.height === Number.POSITIVE_INFINITY ) {
+            if (space.y === 0 && space.height === Number.POSITIVE_INFINITY) {
                 emptyWidth += space.width;
             }
         }
@@ -252,11 +248,11 @@ echo "</h2>";
     };
 
     // always resize
-    Packery.prototype.resize = function() {
+    Packery.prototype.resize = function () {
         this.layout();
     };
 
-    docReady( function() {
+    docReady(function () {
 
         <?php
             if ($countimages === 0) {
@@ -271,26 +267,26 @@ echo "</h2>";
         progressText.fitText(1);
 
 
-            progressText.hide();
-            $('#container a').show();
-            $('#stats').show();
-            new Packery( document.querySelector('.packery'), {
-                itemSelector: '.item',
-                columnWidth: 200,
-                gutter: 20
-            });
+        progressText.hide();
+        $('#container a').show();
+        $('#stats').show();
+        new Packery(document.querySelector('.packery'), {
+            itemSelector: '.item',
+            columnWidth: 200,
+            gutter: 10
+        });
 
-            $(".fancybox").attr('rel', 'gallery').fancybox({
-                padding : 0,
-               	openEffect	: 'none',
-                closeEffect	: 'none',
-                nextEffect	: 'none',
-                prevEffect	: 'none',
-                helpers		: {
-                    title	: { type : 'float' },
-                    buttons	: {}
-                }
-            });
+        $(".fancybox").attr('rel', 'gallery').fancybox({
+            padding: 0,
+            openEffect: 'none',
+            closeEffect: 'none',
+            nextEffect: 'none',
+            prevEffect: 'none',
+            helpers: {
+                title: {type: 'float'},
+                buttons: {}
+            }
+        });
 
         //});
     });
