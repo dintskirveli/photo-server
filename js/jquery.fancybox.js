@@ -13,6 +13,7 @@
 (function (window, document, $, undefined) {
 
     var _isFullscreen = false;
+    var _isPlaying = false;
 
     function launchIntoFullscreen() {
         if (!_isFullscreen) {
@@ -176,8 +177,10 @@
 				iframe   : '<iframe id="fancybox-frame{rnd}" name="fancybox-frame{rnd}" class="fancybox-iframe" frameborder="0" vspace="0" hspace="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen' + (IE ? ' allowtransparency="true"' : '') + '></iframe>',
 				error    : '<p class="fancybox-error">The requested content cannot be loaded.<br/>Please try again later.</p>',
 				closeBtn : '<a title="Close" class="fancybox-item fancybox-close" href="javascript:;"></a>',
-                playBtn : '<a title="Play" class="fancybox-item fancybox-play" href="javascript:;"></a>',
+                playBtn :  '<a title="Play" class="fancybox-item fancybox-play" href="javascript:;"></a>',
+                pauseBtn :  '<a title="Play" class="fancybox-item fancybox-pause" href="javascript:;"></a>',
                 fullscreenBtn : '<a title="Fullscreen" class="fancybox-item fancybox-fullscreen" href="javascript:;"></a>',
+                exitFullscreenBtn : '<a title="Fullscreen" class="fancybox-item fancybox-exit-fullscreen" href="javascript:;"></a>',
 				next     : '<a title="Next" class="fancybox-nav fancybox-next" href="javascript:;"><span></span></a>',
 				prev     : '<a title="Previous" class="fancybox-nav fancybox-prev" href="javascript:;"><span></span></a>'
 			},
@@ -474,6 +477,8 @@
 					}
 				},
 				stop = function () {
+                    console.log("stop");
+                    _isPlaying = false;
 					clear();
 
 					D.unbind('.player');
@@ -483,6 +488,8 @@
 					F.trigger('onPlayEnd');
 				},
 				start = function () {
+                    console.log("start");
+                    _isPlaying = true;
 					if (F.current && (F.current.loop || F.current.index < F.group.length - 1)) {
 						F.player.isActive = true;
 
@@ -554,7 +561,6 @@
 
 			if (current.group[ index ] !== undefined) {
 				F.cancel();
-
 				F._start(index);
 			}
 		},
@@ -1486,32 +1492,43 @@
 					F.close();
 				});
 			}
+            var playPause = function(e) {
+                e.preventDefault();
+                if (_isPlaying) {
+                    $(e.currentTarget).css("background-position", "0 -152px");
+                } else {
+                    $(e.currentTarget).css("background-position", "0 -188px");
+                }
+                F.play();
+            };
 
             // Create a play button
             if (current.playBtn) {
-                $(current.tpl.playBtn).appendTo(F.skin).bind('click.fb', function(e) {
-                    e.preventDefault();
-                    if (F.player.isActive) {
-                        $(e.currentTarget).css("background-position", "0 -152px");
-                    } else {
-                        $(e.currentTarget).css("background-position", "0 -188px");
-                    }
-                    F.play();
-                });
+                if (_isPlaying) {
+                    $(current.tpl.pauseBtn).appendTo(F.skin).bind('click.fb', playPause);
+                } else {
+                    $(current.tpl.playBtn).appendTo(F.skin).bind('click.fb', playPause);
+                }
+            }
+
+            var fullScreenFunc = function(e) {
+                e.preventDefault();
+                if (_isFullscreen) {
+                    exitFullscreen();
+                    $(e.currentTarget).css("background-position", "0 -224px");
+                } else {
+                    launchIntoFullscreen();
+                    $(e.currentTarget).css("background-position", "0 -260px");
+                }
             }
 
             // Create a fullscreen button
             if (current.fullscreenBtn) {
-                $(current.tpl.fullscreenBtn).appendTo(F.skin).bind('click.fb', function(e) {
-                    e.preventDefault();
-                    if (_isFullscreen) {
-                        exitFullscreen();
-                        $(e.currentTarget).css("background-position", "0 -224px");
-                    } else {
-                        launchIntoFullscreen();
-                        $(e.currentTarget).css("background-position", "0 -260px");
-                    }
-                });
+                if (_isFullscreen) {
+                    $(current.tpl.exitFullscreenBtn).appendTo(F.skin).bind('click.fb', fullScreenFunc);
+                } else {
+                    $(current.tpl.fullscreenBtn).appendTo(F.skin).bind('click.fb', fullScreenFunc);
+                }
             }
 
             // Create navigation arrows
