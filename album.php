@@ -7,10 +7,8 @@
     <script src="js/packery.pkgd.min.js"></script>
     <script src="js/imagesloaded.pkgd.min.js"></script>
     <script src="js/jquery.fittext.js"></script>
-    <link rel="stylesheet" href="css/jquery.fancybox.css" type="text/css" media="screen"/>
-    <script src="js/jquery.fancybox.pack.js"></script>
-    <link rel="stylesheet" href="css/jquery.fancybox-buttons.css" type="text/css" media="screen"/>
-    <script src="js/jquery.fancybox-buttons.js"></script>
+    <link rel="stylesheet" href="css/jquery.fancybox.css" type="text/css" media="screen" />
+    <script src="js/jquery.fancybox.js"></script>
     <script src="js/jquery.lazyload.min.js" type="text/javascript"></script>
 
     <script>
@@ -148,6 +146,7 @@
             display: none;
         }
 
+        .fancybox-lock, .fancybox-overlay { overflow: visible !important;}
     </style>
 </head>
 
@@ -197,6 +196,7 @@
                     "title" => "$file"));
                 echo "<a class='fancybox' href='$dir/small/$file' title='$file'><div class='item'/><img class= 'lazy' src='$dir/thumbs/$file' /></div></a>";
                 $countimages += 1;
+
             }
         }
         echo "<script>$('#albumtitle').text('$albumName');$('#slideshow')[0].href='gallery.php?name=$albumName'</script>";
@@ -266,27 +266,38 @@ echo "</h2>";
         var progressText = $("#progress-text");
         progressText.fitText(1);
 
-
-        progressText.hide();
-        $('#container a').show();
-        $('#stats').show();
-        new Packery(document.querySelector('.packery'), {
-            itemSelector: '.item',
-            columnWidth: 200,
-            gutter: 10
-        });
-
-        $(".fancybox").attr('rel', 'gallery').fancybox({
-            padding: 0,
-            openEffect: 'none',
-            closeEffect: 'none',
-            nextEffect: 'none',
-            prevEffect: 'none',
-            helpers: {
-                title: {type: 'float'},
-                buttons: {}
+            progressText.hide();
+            $('#container a').show();
+            $('#stats').show();
+            new Packery( document.querySelector('.packery'), {
+                itemSelector: '.item',
+                columnWidth: 200,
+                gutter: 5
+            });
+        $(".fancybox")
+            .attr('rel', 'gallery')
+        .fancybox({
+            padding    : 0,
+            margin     : 0,
+            openEffect : 'none',
+            nextEffect : 'none',
+            prevEffect : 'none',
+            closeEffect : 'none',
+            autoCenter : false,
+            helpers:{title:null/*,overlay : { locked : false } */},
+            afterLoad  : function () {
+                $.extend(this, {
+                    aspectRatio : false,
+                    type    : 'html',
+                    width   : '100%',
+                    height  : '100%',
+                    content : '<div class="fancybox-image" style="background-image:url(' + this.href + '); background-size: contain; background-position:50% 50%;background-repeat:no-repeat;height:100%;width:100%;" /></div>'
+                });
             }
         });
+
+
+
 
         //});
     });
