@@ -11,6 +11,38 @@
  */
 
 (function (window, document, $, undefined) {
+
+    var _isFullscreen = false;
+
+    function launchIntoFullscreen() {
+        if (!_isFullscreen) {
+            var element = document.documentElement;
+            if (element.requestFullscreen) {
+                element.requestFullscreen();
+            } else if (element.mozRequestFullScreen) {
+                element.mozRequestFullScreen();
+            } else if (element.webkitRequestFullscreen) {
+                element.webkitRequestFullscreen();
+            } else if (element.msRequestFullscreen) {
+                element.msRequestFullscreen();
+            }
+            _isFullscreen = true;
+        }
+    }
+
+    function exitFullscreen() {
+        if (_isFullscreen) {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            }
+            _isFullscreen = false;
+        }
+    }
+
 	"use strict";
 
 	var H = $("html"),
@@ -81,6 +113,7 @@
 			arrows     : true,
 			closeBtn   : true,
             playBtn    : true,
+            fullscreenBtn    : true,
 			closeClick : false,
 			nextClick  : false,
 			mouseWheel : true,
@@ -144,6 +177,7 @@
 				error    : '<p class="fancybox-error">The requested content cannot be loaded.<br/>Please try again later.</p>',
 				closeBtn : '<a title="Close" class="fancybox-item fancybox-close" href="javascript:;"></a>',
                 playBtn : '<a title="Play" class="fancybox-item fancybox-play" href="javascript:;"></a>',
+                fullscreenBtn : '<a title="Fullscreen" class="fancybox-item fancybox-fullscreen" href="javascript:;"></a>',
 				next     : '<a title="Next" class="fancybox-nav fancybox-next" href="javascript:;"><span></span></a>',
 				prev     : '<a title="Previous" class="fancybox-nav fancybox-prev" href="javascript:;"><span></span></a>'
 			},
@@ -1448,7 +1482,7 @@
 			if (current.closeBtn) {
 				$(current.tpl.closeBtn).appendTo(F.skin).bind('click.fb', function(e) {
 					e.preventDefault();
-
+                    exitFullscreen();
 					F.close();
 				});
 			}
@@ -1457,11 +1491,28 @@
             if (current.playBtn) {
                 $(current.tpl.playBtn).appendTo(F.skin).bind('click.fb', function(e) {
                     e.preventDefault();
-
+                    if (F.player.isActive) {
+                        $(e.currentTarget).css("background-position", "0 -152px");
+                    } else {
+                        $(e.currentTarget).css("background-position", "0 -188px");
+                    }
                     F.play();
                 });
             }
 
+            // Create a fullscreen button
+            if (current.fullscreenBtn) {
+                $(current.tpl.fullscreenBtn).appendTo(F.skin).bind('click.fb', function(e) {
+                    e.preventDefault();
+                    if (_isFullscreen) {
+                        exitFullscreen();
+                        $(e.currentTarget).css("background-position", "0 -224px");
+                    } else {
+                        launchIntoFullscreen();
+                        $(e.currentTarget).css("background-position", "0 -260px");
+                    }
+                });
+            }
 
             // Create navigation arrows
 			if (current.arrows && F.group.length > 1) {

@@ -179,7 +179,7 @@ echo "</h2>";
     }
 
     function randomImages() {
-        window.location.href = "gallery.php?random=true";
+        window.location.href = "album.php?random=true";
     }
 
     // overwrite Packery methods

@@ -155,7 +155,7 @@
 <h1 id="pagetitle">My Фотогрэфs</h1>
 
 <h1 id="albumtitle"></h1>
-<a id='slideshow'>Slideshow</a>
+<!--<a id='slideshow'>Slideshow</a>-->
 
 <div id="container" class="packery">
     <h1 id="progress-text"></h1>
@@ -181,7 +181,7 @@
                 array_push($jsondata, array("thumb" => "$thumb",
                     "image" => "$file",
                     "title" => "$name"));
-                echo "<a><div class='item'><img src='$thumb'/></div></a>";
+                echo "<a class='fancybox' href='$file' title='$name'><div class='item'/><img class= 'lazy' src='$thumb' /></div></a>";
                 $countimages += 1;
             }
         }
@@ -199,7 +199,7 @@
 
             }
         }
-        echo "<script>$('#albumtitle').text('$albumName');$('#slideshow')[0].href='gallery.php?name=$albumName'</script>";
+        echo "<script>$('#albumtitle').text('$albumName');</script>";
         //<a href="img/image-1.jpg" data-lightbox="image-1" data-title="My caption">Image #1</a>
     }
 
