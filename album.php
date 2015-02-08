@@ -3,14 +3,15 @@
 <head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
     <title>My Фотогрэфs</title>
+<link href='https://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Ruslan+Display&subset=cyrillic,latin' rel='stylesheet' type='text/css'>
     <script src="js/jquery.js" type="text/javascript"></script>
     <script src="js/packery.pkgd.min.js"></script>
     <script src="js/imagesloaded.pkgd.min.js"></script>
     <script src="js/jquery.fittext.js"></script>
-    <link rel="stylesheet" href="css/jquery.fancybox.css" type="text/css" media="screen" />
-    <script src="js/jquery.fancybox.js"></script>
+    <link rel="stylesheet" href="css/jquery.fancybox3.css" type="text/css" media="screen" />
+    <script src="js/jquery.fancybox3.js"></script>
     <script src="js/jquery.lazyload.min.js" type="text/javascript"></script>
-
     <script>
         $(".lazy").lazyload({effect: "fadeIn"});
     </script>
@@ -22,12 +23,22 @@
             text-align: center;
         }
 
-        h1 {
+        #pagetitle {
+color: white;
+text-shadow: rgb(204, 204, 204) 0px 1px 0px, rgb(201, 201, 201) 0px 2px 0px, rgb(187, 187, 187) 0px 3px 0px, rgb(185, 185, 185) 0px 4px 0px, rgb(170, 170, 170) 0px 5px 0px, rgba(0, 0, 0, 0.0980392) 0px 6px 1px, rgba(0, 0, 0, 0.0980392) 0px 0px 5px, rgba(0, 0, 0, 0.298039) 0px 1px 3px, rgba(0, 0, 0, 0.2) 0px 3px 5px, rgba(0, 0, 0, 0.247059) 0px 5px 10px, rgba(0, 0, 0, 0.2) 0px 10px 10px, rgba(0, 0, 0, 0.14902) 0px 20px 20px;
+		font-family: 'Lobster', cursive;
+            margin-top: 10px;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        h2 {
             margin-top: 0px;
             margin-bottom: 10px;
             font-family: anchor-web-1, anchor-web-2, Impact, sans-serif;
             text-align: center;
         }
+
 
         .item h3 {
             margin: 10px;
@@ -42,7 +53,6 @@
 
         #container a {
             cursor: pointer;
-            display: none;
         }
 
         .item {
@@ -53,14 +63,19 @@
             width: 200px;
             height: 150px;
             background-color: lightgray;
-            box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 8px 1px;
             width: 200px;
             float: left;
         }
 
         .packery {
+border-top-right-radius: 8px;
+border-top-left-radius: 8px;
+border-bottom-right-radius: 8px;
+border-bottom-left-radius: 8px;
             margin: 0 auto;
-            margin-top: 20px;
+	background-color: white;
+	padding:10px;	
+            box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 8px 1px;
         }
 
         .packery:after {
@@ -82,11 +97,6 @@
 
         .random img {
             width: auto;
-        }
-
-        .random h3 {
-            margin-top: 0px;
-            font-size: 16px;
         }
 
         .random h1 {
@@ -123,7 +133,6 @@
         }
 
         #stats {
-            display: none;
             text-align: center;
         }
 
@@ -152,14 +161,13 @@
 
 <body>
 
-<h1 id="pagetitle">My Фотогрэфs</h1>
+<h1 id="pagetitle">Фотогрэфs</h1>
 
-<h1 id="albumtitle"></h1>
 <!--<a id='slideshow'>Slideshow</a>-->
-
 <div id="container" class="packery">
-    <h1 id="progress-text"></h1>
     <!--<div id="container" class="packery js-packery" data-packery-options='{ "gutter": ".gutter-sizer", "itemSelector": ".item", "columnWidth": ".grid-sizer" }'>-->
+
+<h2 id="albumtitle" class="stamp"></h2>
     <div class="gutter-sizer"></div>
     <div class="grid-sizer"></div>
 
@@ -199,14 +207,15 @@
 
             }
         }
-        echo "<script>$('#albumtitle').text('$albumName');</script>";
         //<a href="img/image-1.jpg" data-lightbox="image-1" data-title="My caption">Image #1</a>
     }
 
+        echo "<script>$('#albumtitle').text('$albumName');</script>";
     ?>
 </div>
 <?php
-echo "<h2 id='stats'>";
+
+echo "<br><h2 id='stats'>";
 if ($countimages > 0) {
     echo "$countimages images.";
 } else {
@@ -224,7 +233,6 @@ echo "</h2>";
         var parentSize = getSize(this.element.parentNode);
         var colW = this.columnWidth + this.gutter;
         this.fitWidth = Math.floor(( parentSize.innerWidth + this.gutter ) / colW) * colW;
-        console.log(colW, this.fitWidth)
         this.packer.width = this.fitWidth;
         this.packer.height = Number.POSITIVE_INFINITY;
         this.packer.reset();
@@ -262,17 +270,12 @@ echo "</h2>";
             }
          ?>
 
-        $("#pagetitle").fitText(1);
-        var progressText = $("#progress-text");
-        progressText.fitText(1);
-
-            progressText.hide();
-            $('#container a').show();
-            $('#stats').show();
+        $("#pagetitle").fitText(0.7);
             new Packery( document.querySelector('.packery'), {
                 itemSelector: '.item',
+		stamp: '.stamp', 
                 columnWidth: 200,
-                gutter: 5
+                gutter: 2
             });
         $(".fancybox")
             .attr('rel', 'gallery')
