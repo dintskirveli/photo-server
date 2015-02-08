@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link href='https://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
     <title>My Фотогрэфs</title>
     <script src="js/jquery.js" type="text/javascript"></script>
@@ -10,14 +11,16 @@
     <style type="text/css">
         body {
             margin: 0px;
-            background:#ececec;
+            background:orange;
             font-family: 'Helvetica Neue', arial, sans-serif;
         }
 
-        h1 {
-            margin-top: 0px;
-            margin-bottom: 10px;
-            font-family: anchor-web-1, anchor-web-2, Impact, sans-serif;
+        #pagetitle {
+            color: white;
+            text-shadow: rgb(204, 204, 204) 0px 1px 0px, rgb(201, 201, 201) 0px 2px 0px, rgb(187, 187, 187) 0px 3px 0px, rgb(185, 185, 185) 0px 4px 0px, rgb(170, 170, 170) 0px 5px 0px, rgba(0, 0, 0, 0.0980392) 0px 6px 1px, rgba(0, 0, 0, 0.0980392) 0px 0px 5px, rgba(0, 0, 0, 0.298039) 0px 1px 3px, rgba(0, 0, 0, 0.2) 0px 3px 5px, rgba(0, 0, 0, 0.247059) 0px 5px 10px, rgba(0, 0, 0, 0.2) 0px 10px 10px, rgba(0, 0, 0, 0.14902) 0px 20px 20px;
+            font-family: 'Lobster', cursive;
+            margin-top: 10px;
+            margin-bottom: 50px;
             text-align: center;
         }
 
@@ -47,7 +50,8 @@
             border-top-left-radius: 8px;
             border-bottom-right-radius: 8px;
             border-bottom-left-radius: 8px;
-            box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 8px 1px;
+            box-shadow:  rgb(204, 204, 204) 0px 1px 0px, rgb(201, 201, 201) 0px 2px 0px, rgb(187, 187, 187) 0px 3px 0px, rgb(185, 185, 185) 0px 4px 0px, rgb(170, 170, 170) 0px 5px 0px, rgba(0, 0, 0, 0.0980392) 0px 6px 1px, rgba(0, 0, 0, 0.0980392) 0px 0px 5px, rgba(0, 0, 0, 0.298039) 0px 1px 3px, rgba(0, 0, 0, 0.2) 0px 3px 5px, rgba(0, 0, 0, 0.247059) 0px 5px 10px, rgba(0, 0, 0, 0.2) 0px 10px 10px, rgba(0, 0, 0, 0.14902) 0px 20px 20px;
+
             width: 200px;
             float: left;
         }
@@ -124,7 +128,7 @@
 <body>
 
 <div id="progress"></div>
-<h1 id="pagetitle">My Фотогрэфs</h1>
+<h1 id="pagetitle">Фотогрэфs</h1>
 
 
 <div id="container" class="packery">
@@ -228,7 +232,7 @@ echo "</h2>";
             }
          ?>
 
-        $("#pagetitle").fitText(1);
+        $("#pagetitle").fitText(0.7);
         var progressText = $("#progress-text");
         progressText.fitText(1);
 
