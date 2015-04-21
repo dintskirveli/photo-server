@@ -1524,9 +1524,19 @@
                 }
             }
 
+var downloadURI = function (uri, name) {
+  var link = document.createElement("a");
+  link.download = name;
+  link.href = uri;
+  link.click();
+}
+
             var downloadFunc = function(e) {
                 e.preventDefault();
-                console.log($(e.currentTarget))
+                var url = $('.fancybox-image').css('background-image').replace('url(','').replace(')','').replace('/small/','/');
+		console.log(url)
+		var name = url.substring(url.lastIndexOf('/')+1)
+		downloadURI(url, name)
             }
 
             // Create a fullscreen button

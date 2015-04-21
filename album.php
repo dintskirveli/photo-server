@@ -8,8 +8,8 @@
     <script src="js/packery.pkgd.min.js"></script>
     <script src="js/imagesloaded.pkgd.min.js"></script>
     <script src="js/jquery.fittext.js"></script>
-    <link rel="stylesheet" href="css/jquery.fancybox3.css" type="text/css" media="screen" />
-    <script src="js/jquery.fancybox3.js"></script>
+    <link rel="stylesheet" href="css/jquery.fancybox4.css" type="text/css" media="screen" />
+    <script src="js/jquery.fancybox4.js"></script>
     <script src="js/jquery.lazyload.min.js" type="text/javascript"></script>
     <script>
         $(".lazy").lazyload({effect: "fadeIn"});
