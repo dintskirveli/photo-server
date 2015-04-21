@@ -72,7 +72,7 @@
     background-size: contain;
 }
 
-#fancybox-loading, .fancybox-close, .fancybox-fullscreen, .fancybox-exit-fullscreen, .fancybox-play, .fancybox-pause, .fancybox-prev span, .fancybox-next span {
+#fancybox-loading, .fancybox-close, .fancybox-download, .fancybox-fullscreen, .fancybox-exit-fullscreen, .fancybox-play, .fancybox-pause, .fancybox-prev span, .fancybox-next span {
     background-image: url('/img/sprite.png');
 }
 
@@ -131,6 +131,17 @@
     position: absolute;
     top: 6px;
     right: 42px;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    z-index: 8040;
+}
+
+.fancybox-download {
+    background-position: 0 -260px;
+    position: absolute;
+    top: 6px;
+    right: 114px;
     width: 36px;
     height: 36px;
     cursor: pointer;

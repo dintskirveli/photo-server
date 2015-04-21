@@ -13,7 +13,9 @@
             margin: 0px;
             background:orange;
             font-family: 'Helvetica Neue', arial, sans-serif;
-        }
+        
+            text-align: center;
+	}
 
         #pagetitle {
             color: white;
@@ -21,7 +23,6 @@
             font-family: 'Lobster', cursive;
             margin-top: 10px;
             margin-bottom: 50px;
-            text-align: center;
         }
 
         .item h3 {
@@ -119,7 +120,7 @@
         }
 
 	#progress-text {
-		color: #B2B2B2;
+		color: white;
 	}
 
     </style>
@@ -142,7 +143,7 @@
     $countimages = 0;
     $albums = 0;
 
-    $secret=array("2014_12_26_Cocktails");
+    $secret=array("2014_12_26_Cocktails", "2015_02_Syracuse");
     $dir    = 'photos';
     $files = scandir($dir,1);
     foreach ($files as $file) {
