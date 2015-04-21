@@ -115,6 +115,7 @@
 			closeBtn   : true,
             playBtn    : true,
             fullscreenBtn    : true,
+            downloadBtn    : true,
 			closeClick : false,
 			nextClick  : false,
 			mouseWheel : true,
@@ -180,6 +181,7 @@
                 playBtn :  '<a title="Play" class="fancybox-item fancybox-play" href="javascript:;"></a>',
                 pauseBtn :  '<a title="Play" class="fancybox-item fancybox-pause" href="javascript:;"></a>',
                 fullscreenBtn : '<a title="Fullscreen" class="fancybox-item fancybox-fullscreen" href="javascript:;"></a>',
+                downloadBtn : '<a title="Download" class="fancybox-item fancybox-download" href="javascript:;"></a>',
                 exitFullscreenBtn : '<a title="Fullscreen" class="fancybox-item fancybox-exit-fullscreen" href="javascript:;"></a>',
 				next     : '<a title="Next" class="fancybox-nav fancybox-next" href="javascript:;"><span></span></a>',
 				prev     : '<a title="Previous" class="fancybox-nav fancybox-prev" href="javascript:;"><span></span></a>'
@@ -1522,6 +1524,11 @@
                 }
             }
 
+            var downloadFunc = function(e) {
+                e.preventDefault();
+                console.log($(e.currentTarget))
+            }
+
             // Create a fullscreen button
             if (current.fullscreenBtn) {
                 if (_isFullscreen) {
@@ -1530,6 +1537,8 @@
                     $(current.tpl.fullscreenBtn).appendTo(F.skin).bind('click.fb', fullScreenFunc);
                 }
             }
+
+            $(current.tpl.downloadBtn).appendTo(F.skin).bind('click.fb', downloadFunc);
 
             // Create navigation arrows
 			if (current.arrows && F.group.length > 1) {
