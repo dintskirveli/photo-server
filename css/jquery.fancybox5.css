@@ -72,7 +72,7 @@
     background-size: contain;
 }
 
-#fancybox-loading, .fancybox-close, .fancybox-download, .fancybox-fullscreen, .fancybox-exit-fullscreen, .fancybox-play, .fancybox-pause, .fancybox-prev span, .fancybox-next span {
+#fancybox-loading {
     background-image: url('/img/sprite.png');
 }
 
@@ -95,66 +95,73 @@
 }
 
 .fancybox-close {
+    background-image: url('/img/ic_action_remove.png');
+    background-color: rgba(0, 0, 0, 0.5);
 	position: absolute;
-	top: 6px;
+	top: 0px;
 	right: 6px;
-	width: 36px;
-	height: 36px;
+	width: 32px;
+	height: 32px;
 	cursor: pointer;
 	z-index: 8040;
 }
 
 .fancybox-pause {
-    background-position: 0 -188px;
+    background-image: url('/img/ic_action_pause_over_video.png');
+    background-color: rgba(0, 0, 0, 0.5);
     position: absolute;
-    top: 6px;
-    right: 78px;
-    width: 36px;
-    height: 36px;
+    top: 0px;
+    right: 70px;
+    width: 32px;
+    height: 32px;
     cursor: pointer;
     z-index: 8040;
 }
 
 .fancybox-play {
-    background-position: 0 -152px;
+    background-image: url('/img/ic_action_play_over_video.png');
+    background-color: rgba(0, 0, 0, 0.5);
     position: absolute;
-    top: 6px;
-    right: 78px;
-    width: 36px;
-    height: 36px;
+    top: 0px;
+    right: 70px;
+    width: 32px;
+    height: 32px;
     cursor: pointer;
     z-index: 8040;
 }
 
 .fancybox-exit-fullscreen {
-    background-position: 0 -260px;
+    background-image: url('/img/ic_action_return_from_full_screen.png');
+    background-color: rgba(0, 0, 0, 0.5);
     position: absolute;
-    top: 6px;
-    right: 42px;
-    width: 36px;
-    height: 36px;
+    top: 0px;
+    right: 38px;
+    width: 32px;
+    height: 32px;
     cursor: pointer;
     z-index: 8040;
 }
 
 .fancybox-download {
-    background-position: 0 -260px;
+    background-image: url('/img/ic_action_download.png');
+    background-color: rgba(0, 0, 0, 0.5);
     position: absolute;
-    top: 6px;
-    right: 114px;
-    width: 36px;
-    height: 36px;
+    top: 0px;
+    right: 102px;
+    width: 32px;
+    height: 32px;
     cursor: pointer;
     z-index: 8040;
 }
 
 .fancybox-fullscreen {
-    background-position: 0 -224px;
+    background-image: url('/img/ic_action_full_screen.png');
+    background-color: rgba(0, 0, 0, 0.5);
     position: absolute;
-    top: 6px;
-    right: 42px;
-    width: 36px;
-    height: 36px;
+    top: 0px;
+    right: 38px;
+    width: 32px;
+    height: 32px;
     cursor: pointer;
     z-index: 8040;
 }
@@ -192,12 +199,14 @@
 
 .fancybox-prev span {
 	left: 10px;
-	background-position: 0 -36px;
+    background-image: url('/img/ic_action_previous.png');
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .fancybox-next span {
 	right: 10px;
-	background-position: 0 -72px;
+    background-image: url('/img/ic_action_next.png');
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .fancybox-nav:hover span {

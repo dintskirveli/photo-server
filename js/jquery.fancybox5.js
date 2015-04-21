@@ -1497,9 +1497,9 @@
             var playPause = function(e) {
                 e.preventDefault();
                 if (_isPlaying) {
-                    $(e.currentTarget).css("background-position", "0 -152px");
+                    $(e.currentTarget).css("background-image", "url('/img/ic_action_play_over_video.png')");
                 } else {
-                    $(e.currentTarget).css("background-position", "0 -188px");
+                    $(e.currentTarget).css("background-image", "url('/img/ic_action_pause_over_video.png')");
                 }
                 F.play();
             };
@@ -1517,10 +1517,10 @@
                 e.preventDefault();
                 if (_isFullscreen) {
                     exitFullscreen();
-                    $(e.currentTarget).css("background-position", "0 -224px");
+                    $(e.currentTarget).css("background-image", "url('/img/ic_action_full_screen.png')");
                 } else {
                     launchIntoFullscreen();
-                    $(e.currentTarget).css("background-position", "0 -260px");
+                    $(e.currentTarget).css("background-image", "url('/img/ic_action_return_from_full_screen.png')");
                 }
             }
 
