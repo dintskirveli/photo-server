@@ -145,24 +145,17 @@
 
     $secret=array("2014_12_26_Cocktails", "2015_02_Syracuse");
     $dir    = 'photos';
+    #echo `pwd`;
     $files = scandir($dir,1);
-    foreach ($files as $file) {
-        if (!in_array($file, $secret)){
-            $fullfile = $dir."/".$file;
-            if ($file != "." && $file != ".." && is_dir($fullfile)){
-                $search_dir = $fullfile."/"."thumbs";
-                $images = glob("$search_dir/*.JPG");
-                $imgcount = count($images);
-                if ($imgcount == 0){
-                    echo "<script>console.log('$file')</script>";
-                } else {
-                    $albums = $albums + 1;
-                    $countimages = $countimages + $imgcount;
-                    $randomImageIndex = rand(0, $imgcount-1);
-                    $img = $images[$randomImageIndex];
-                    echo "<a href='album.php?name=$file' ><div class='item'><img src='$img'/><h3>$file</h3><p>$imgcount images.</p></div></a>";
-                }
-            }
+    foreach ($files as $file) { 
+       $fullfile = $dir."/".$file;
+       if (!in_array($file, $secret) && $file != "." && $file != ".." && is_dir($fullfile)) {
+            #echo $fullfile;
+	    $img = `find "$fullfile" | grep /thumbs/ | grep -i .jpg | shuf | head -n 1`;
+            $imgcount = intval(`find "$fullfile" | grep /small/ | wc -l`);
+            $albums = $albums + 1;
+            $countimages = $countimages + $imgcount;
+            echo "<a href='album.php?name=$file' ><div class='item'><img src='$img'/><h3>$file</h3><p>$imgcount images.</p></div></a>"; 
         }
     }
     ?>

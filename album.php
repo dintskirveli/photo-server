@@ -2,7 +2,15 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
-    <title>My Фотогрэфs</title>
+    <title>
+<?php
+if (!isset($_GET["name"]) || (isset($_GET['random']) && $_GET['random'] == "true")) {
+	echo "RANDOM";
+} else {
+	echo $_GET["name"];
+}
+?>
+</title>
 <link href='https://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <script src="js/jquery.js" type="text/javascript"></script>
     <script src="js/packery.pkgd.min.js"></script>
@@ -31,55 +39,112 @@ text-shadow: rgb(204, 204, 204) 0px 1px 0px, rgb(201, 201, 201) 0px 2px 0px, rgb
             text-align: center;
         }
 
-
-
-
-        .item h3 {
+        .packery-albums .item h3 {
             margin: 10px;
             font-size: 13px;
         }
 
-        .item p {
+        .packery-albums .item p {
             margin: 10px;
             font-size: 12px;
             color: #aaa;
         }
 
-        #container a {
+        #albums-container {
+            cursor: pointer;
+	    display: none;
+        }
+
+       .packery-albums .gutter-sizer {
+            width: 2%;
+        }
+
+        .packery-albums .grid-sizer {
+            width: 200px;
+        }
+
+        .packery-albums .item img {
+            width: 100%;
+            border-top-right-radius: 8px;
+            border-top-left-radius: 8px;
+
+        }
+
+        .packery-albums .item {
+            word-wrap: break-word;
+            text-align: center;
+            vertical-align: top;
+            background: #fff;
+            box-sizing: border-box;
+            border-top-right-radius: 8px;
+            border-top-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            border-bottom-left-radius: 8px;
+            box-shadow:  rgb(204, 204, 204) 0px 1px 0px, rgb(201, 201, 201) 0px 2px 0px, rgb(187, 187, 187) 0px 3px 0px, rgb(185, 185, 185) 0px 4px 0px, rgb(170, 170, 170) 0px 5px 0px, rgba(0, 0, 0, 0.0980392) 0px 6px 1px, rgba(0, 0, 0, 0.0980392) 0px 0px 5px, rgba(0, 0, 0, 0.298039) 0px 1px 3px, rgba(0, 0, 0, 0.2) 0px 3px 5px, rgba(0, 0, 0, 0.247059) 0px 5px 10px, rgba(0, 0, 0, 0.2) 0px 10px 10px, rgba(0, 0, 0, 0.14902) 0px 20px 20px;
+
+            width: 200px;
+            float: left;
+        }
+
+        #photos-container {
+              cursor: pointer;
+              display: none;
+          }
+	.packery-albums {
+            margin: 0 auto;
+        }
+        .packery-albums:after {
+            content: ' ';
+            display: block;
+            clear: both;
+        }
+
+        .packery-photos .item h3 {
+            margin: 10px;
+            font-size: 13px;
+        }
+
+        .packery-photos .item p {
+            margin: 10px;
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        #photos-container a {
             cursor: pointer;
         }
 
-        .item {
+        .packery-photos .item {
             word-wrap: break-word;
             text-align: center;
             vertical-align: top;
             box-sizing: border-box;
             width: 200px;
+            padding: 0px;
             height: 150px;
             background-color: lightgray;
-            width: 200px;
             float: left;
         }
 
-        .packery {
+        .packery-photos {
 border-top-right-radius: 8px;
 border-top-left-radius: 8px;
 border-bottom-right-radius: 8px;
 border-bottom-left-radius: 8px;
             margin: 0 auto;
 	background-color: white;
-	padding:20px;
+	padding:10px;
             box-shadow: rgb(204, 204, 204) 0px 1px 0px, rgb(201, 201, 201) 0px 2px 0px, rgb(187, 187, 187) 0px 3px 0px, rgb(185, 185, 185) 0px 4px 0px, rgb(170, 170, 170) 0px 5px 0px, rgba(0, 0, 0, 0.0980392) 0px 6px 1px, rgba(0, 0, 0, 0.0980392) 0px 0px 5px, rgba(0, 0, 0, 0.298039) 0px 1px 3px, rgba(0, 0, 0, 0.2) 0px 3px 5px, rgba(0, 0, 0, 0.247059) 0px 5px 10px, rgba(0, 0, 0, 0.2) 0px 10px 10px, rgba(0, 0, 0, 0.14902) 0px 20px 20px;
 
         }
 
-        .packery:after {
+        .packery-photos:after {
             content: ' ';
             display: block;
             clear: both;
         }
 
-        .item img {
+        .packery-photos .item img {
             min-width: 100%;
             min-height: 100%;
             clip: rect(0px, 200px, 150px, 0px);
@@ -119,11 +184,11 @@ border-bottom-left-radius: 8px;
             text-decoration: underline;
         }
 
-        .gutter-sizer {
+        .packery-photos .gutter-sizer {
             width: 1%;
         }
 
-        .grid-sizer {
+        .packery-photos .grid-sizer {
             width: 200px;
         }
 
@@ -150,6 +215,10 @@ border-bottom-left-radius: 8px;
             display: none;
         }
 
+     	#progress-text {
+                color: white;
+        }
+
         .fancybox-lock, .fancybox-overlay { overflow: visible !important;}
     </style>
 </head>
@@ -158,10 +227,39 @@ border-bottom-left-radius: 8px;
 
 <h1 id="pagetitle">Фотогрэфs</h1>
 <h2 id="albumtitle" class="stamp"></h2>
-<!--<a id='slideshow'>Slideshow</a>-->
-<div id="container" class="packery">
-    <!--<div id="container" class="packery js-packery" data-packery-options='{ "gutter": ".gutter-sizer", "itemSelector": ".item", "columnWidth": ".grid-sizer" }'>-->
+<h1 id="progress-text"></h1>
+<div id="albums-container" class="packery-albums">
+    <div class="gutter-sizer"></div>
+    <div class="grid-sizer"></div>
+<?php
 
+$countimages = 0;
+$albums = 0;
+if (isset($_GET["name"])) {
+	$dir = "photos/" . $_GET["name"];
+	$files = scandir($dir);
+	$exclude=array("small", "thumbs");
+	foreach ($files as $file) {
+       		$fullfile = $dir."/".$file;
+       		if (!in_array($file, $exclude) && $file != "." && $file != ".." && is_dir($fullfile)) {
+        		#echo $fullfile;
+           		$img = `find "$fullfile" | grep /thumbs/ | grep -i .jpg | shuf | head -n 1`;
+            		$imgcount = intval(`find "$fullfile" | grep /small/ | wc -l`);
+            		$albums = $albums + 1;
+            		#$countimages = $countimages + $imgcount;
+			$album=$_GET["name"]."/".$file;
+            		echo "<a href='album.php?name=$album' ><div class='item'><img src='$img'/><h3>$file</h3><p>$imgcount images.</p></div></a>";
+        	}
+    	}
+}
+?>
+</div>
+<?php
+if ($albums > 0) {
+	echo "<br>";
+}
+?>
+<div id="photos-container" class="packery-photos">
 
     <div class="gutter-sizer"></div>
     <div class="grid-sizer"></div>
@@ -169,7 +267,6 @@ border-bottom-left-radius: 8px;
 
     <?php
     $albumName = "";
-    $countimages = 0;
     $jsondata = array();
     $allowed = array("JPG", "JPEG");
     if (!isset($_GET["name"]) || (isset($_GET['random']) && $_GET['random'] == "true")) {
@@ -202,17 +299,16 @@ border-bottom-left-radius: 8px;
 
             }
         }
-        //<a href="img/image-1.jpg" data-lightbox="image-1" data-title="My caption">Image #1</a>
     }
 
-        echo "<script>$('#albumtitle').text('$albumName');</script>";
+        echo "<script>$('#albumtitle').text('$albumName'.split('/').join(' \u{2192} '));</script>";
     ?>
 </div>
 <?php
 
 echo "<br><h2 id='stats'>";
-if ($countimages > 0) {
-    echo "$countimages images.";
+if ($countimages > 0 || $albums > 0) {
+    echo "$albums albums and $countimages images.";
 } else {
     echo "... will be back soon :(";
 }
@@ -257,21 +353,69 @@ echo "</h2>";
 
     docReady(function () {
 
+	var numAlbumsLoaded = 0;
+	var numImagesLoaded = 0;
         <?php
-            if ($countimages === 0) {
+            if ($countimages === 0 && $albums === 0) {
                 echo "return;";
             } else {
-                echo "var numThumbs = $countimages;";
+                echo "var numAlbums = $albums;";
+		echo "var numImages = $countimages;";
             }
          ?>
+	var progressText = $("#progress-text");
+        progressText.fitText(1);
 
         $("#pagetitle").fitText(0.7);
-            new Packery( document.querySelector('.packery'), {
-                itemSelector: '.item',
-		stamp: '.stamp', 
-                columnWidth: 200,
-                gutter: 5
-            });
+	var photosDone = false;
+	var albumsDone = false;
+
+	var load = function () {
+		progressText.hide();
+		if (numAlbums > 0) {
+                	$('#albums-container').show();
+			new Packery( document.querySelector('#albums-container'), {
+                		itemSelector: '.item',
+                		columnWidth: 200,
+                		gutter: 20
+            		});
+		}
+		if (numImages > 0) {
+                	$('#photos-container').show();
+			new Packery( document.querySelector('#photos-container'), {
+                		itemSelector: '.item',
+                		stamp: '.stamp',
+                		columnWidth: 200,
+                		gutter: 5
+         		});
+		}
+	}
+
+	$('#albums-container').imagesLoaded().always(function( instance, image ) {
+		photosDone = true;
+		if (photosDone && albumsDone){
+			load();
+		}
+	})	
+
+	$('#photos-container').imagesLoaded().always(function( instance, image ) {
+		albumsDone = true;
+		if (photosDone && albumsDone){
+                        load();
+                }
+        })
+
+	$('#albums-container').imagesLoaded().progress(function( instance, image ) {
+            numAlbumsLoaded++;
+            var percent = Math.round((numAlbumsLoaded+numImagesLoaded)*100/(numAlbums+numImages+1));
+            progressText.text(percent + '%');
+        });
+        $('#photos-container').imagesLoaded().progress(function( instance, image ) {
+        	numAlbumsLoaded++;
+        	var percent = Math.round((numAlbumsLoaded+numImagesLoaded)*100/(numAlbums+numImages+1));
+		progressText.text(percent + '%');
+         });
+
         $(".fancybox")
             .attr('rel', 'gallery')
         .fancybox({
