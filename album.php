@@ -7,6 +7,7 @@
 if (!isset($_GET["name"]) || (isset($_GET['random']) && $_GET['random'] == "true")) {
 	echo "RANDOM";
 } else {
+	$_GET["name"] = rtrim($_GET["name"], '/');
 	echo $_GET["name"];
 }
 ?>
